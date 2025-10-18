@@ -4,7 +4,10 @@ public class tictactoe {
 
     private static final int SIZE = 3;   
     private static char[][] board = new char[SIZE][SIZE]; 
-    private static char currentPlayer = 'X'; // Current player ('X' or 'O')
+    private static char currentPlayer = 'X';
+    private static String playerXName = "Srinidhi"; // Player X name
+    private static String playerOName = "Siri";     // Player O name
+ // Current player ('X' or 'O')
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -30,7 +33,7 @@ public class tictactoe {
     private static void initializeBoard() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                board[i][j] = ' ';
+                board[i][j] = '-';
             }
         }
     }
@@ -42,20 +45,21 @@ public class tictactoe {
  * Displays the current state of the board with closed borders (grid style)
  */
 private static void printBoard() {
-    System.out.println("Current Board:");
-    System.out.println("┌───┬───┬───┐");
+    System.out.println("    0   1   2"); // column indices
+    System.out.println("  ┌───┬───┬───┐"); // top border
     for (int i = 0; i < SIZE; i++) {
-        System.out.print("│ ");
+        System.out.print(i + " │ "); // row index and left border
         for (int j = 0; j < SIZE; j++) {
             System.out.print(board[i][j] + " │ ");
         }
         System.out.println();
         if (i < SIZE - 1) {
-            System.out.println("├───┼───┼───┤");
+            System.out.println("  ├───┼───┼───┤"); // middle borders
         }
     }
-    System.out.println("└───┴───┴───┘");
+    System.out.println("  └───┴───┴───┘"); // bottom border
 }
+
 
 
 
@@ -68,7 +72,8 @@ private static void printBoard() {
 
         while (!gameEnded) {
             printBoard();
-            System.out.println("Player " + currentPlayer + ", enter your move (row and column): ");
+            System.out.println(getCurrentPlayerName() + ", enter your move (row and column): ");
+
 
             int row = sc.nextInt();
             int col = sc.nextInt();
@@ -85,7 +90,8 @@ private static void printBoard() {
             // Check game status
             if (checkWin(currentPlayer)) {
                 printBoard();
-                System.out.println("Player " + currentPlayer + " wins! 🎉");
+            System.out.println(getCurrentPlayerName() + " wins! 🎉");
+
                 gameEnded = true;
             } else if (isBoardFull()) {
                 printBoard();
@@ -110,6 +116,10 @@ private static void printBoard() {
     private static void switchPlayer() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
+    private static String getCurrentPlayerName() {
+    return (currentPlayer == 'X') ? playerXName : playerOName;
+}
+
 
     /** 
      * Checks if the current player has won 
